@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels:
+    app: hello-world
+    environment: test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+        env: test
+    spec:
+      containers:
+        - name: hello
+          image: hashicorp/http-echo:0.2.3
+          args:
+            - "-text=Hello, World!"
+          ports:
+            - containerPort: 5678

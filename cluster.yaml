@@ -1,0 +1,26 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: test-cluster
+  region: us-east-1
+  tags:
+    env: test
+
+vpc:
+  id: vpc-025b258d5c89c8dfd
+  subnets:
+    private:
+      us-east-1a: { id: subnet-0aef51f989c20b941 }
+      us-east-1b: { id: subnet-0a1b5afa61128b2a3 }
+
+nodeGroups:
+  - name: test-group
+    instanceType: t3.medium
+    desiredCapacity: 2
+    privateNetworking: true
+    subnets:
+      - subnet-0aef51f989c20b941
+      - subnet-0a1b5afa61128b2a3
+    tags:
+      env: test
