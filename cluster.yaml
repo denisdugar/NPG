@@ -5,14 +5,25 @@ metadata:
   name: test-cluster
   region: us-east-1
   tags:
-    env: test
+    env: test-env
+    app: npg-test
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+iam:
+  withOIDC: true
 
 vpc:
-  id: vpc-025b258d5c89c8dfd
+#  clusterEndpoints:
+#    publicAccess: false
+#    privateAccess: true
+  id: vpc-0d2d753c2fa916692
   subnets:
     private:
-      us-east-1a: { id: subnet-0aef51f989c20b941 }
-      us-east-1b: { id: subnet-0a1b5afa61128b2a3 }
+      us-east-1a: { id: subnet-05f055fa8e5fefb87 }
+      us-east-1b: { id: subnet-00cf3e0dacfb8d4cb }
 
 nodeGroups:
   - name: test-group
@@ -20,7 +31,10 @@ nodeGroups:
     desiredCapacity: 2
     privateNetworking: true
     subnets:
-      - subnet-0aef51f989c20b941
-      - subnet-0a1b5afa61128b2a3
+      - subnet-05f055fa8e5fefb87
+      - subnet-00cf3e0dacfb8d4cb
+    labels:
+      role: worker
     tags:
       env: test
+      app: npg-test
